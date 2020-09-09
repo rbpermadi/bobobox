@@ -16,13 +16,24 @@ import (
 )
 
 type Response struct {
-	Data    interface{} `json:"data"`
+	Data    interface{} `json:"data,omitempty"`
 	Message string      `json:"message,omitempty"`
+	Errors  *ErrorInfo  `json:"errors,omitempty"`
+	Meta    MetaInfo    `json:"meta"`
 }
 
-type ResponseError struct {
-	Code    int    `json:"code"`
+// MetaInfo holds meta data
+type MetaInfo struct {
+	HTTPStatus int  `json:"http_status"`
+	Offset     *int `json:"offset,omitempty"`
+	Limit      *int `json:"limit,omitempty"`
+	Total      *int `json:"total,omitempty"`
+}
+
+// ErrorInfo holds error detail
+type ErrorInfo struct {
 	Message string `json:"message"`
+	Code    int    `json:"code"`
 }
 
 //ServerUp to run server
@@ -35,6 +46,7 @@ func ServerUp() {
 		resp := Response{
 			Data:    cfg.DB.Stats(),
 			Message: "OK",
+			Meta:    MetaInfo{HTTPStatus: 200},
 		}
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(200)
@@ -67,25 +79,35 @@ func SearchHotelAvailabilities(w http.ResponseWriter, r *http.Request, params ht
 		HotelRepo: hotelRepo,
 	}
 
-	hotels, err, httpStatus := ac.SearchAvailabilities(limit, offset, checkinDate, checkoutDate, hotelIds)
+	hotels, totalHotels, err := ac.SearchAvailabilities(limit, offset, checkinDate, checkoutDate, hotelIds)
 	if err != nil {
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(httpStatus)
-		response := ResponseError{
-			Code:    httpStatus,
+		errorInfo := ErrorInfo{
+			Code:    400,
 			Message: err.Error(),
 		}
+
+		response := Response{
+			Errors: &errorInfo,
+			Meta:   MetaInfo{HTTPStatus: 400},
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(400)
 		json.NewEncoder(w).Encode(response)
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(httpStatus)
-
 	response := Response{
 		Data: hotels,
+		Meta: MetaInfo{
+			HTTPStatus: 200,
+			Limit:      &limit,
+			Offset:     &offset,
+			Total:      &totalHotels,
+		},
 	}
 
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
 	json.NewEncoder(w).Encode(response)
 }
 
