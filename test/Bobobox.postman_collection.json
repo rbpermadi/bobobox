@@ -1,0 +1,337 @@
+{
+	"info": {
+		"_postman_id": "b0957018-8d62-44a2-9122-244c177a417f",
+		"name": "Bobobox",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Search Hotel Room Availability",
+			"item": [
+				{
+					"name": "Success Sample",
+					"item": [
+						{
+							"name": "TEST CASE 1",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:7171/hotels/search-availabilities?checkin_date=2020-01-10&checkout_date=2020-01-11",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7171",
+									"path": [
+										"hotels",
+										"search-availabilities"
+									],
+									"query": [
+										{
+											"key": "checkin_date",
+											"value": "2020-01-10"
+										},
+										{
+											"key": "checkout_date",
+											"value": "2020-01-11"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TEST CASE 2",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:7171/hotels/search-availabilities?checkin_date=2020-01-10&checkout_date=2020-01-20",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7171",
+									"path": [
+										"hotels",
+										"search-availabilities"
+									],
+									"query": [
+										{
+											"key": "checkin_date",
+											"value": "2020-01-10"
+										},
+										{
+											"key": "checkout_date",
+											"value": "2020-01-20"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "With filter by hotel_ids",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:7171/hotels/search-availabilities?checkin_date=2020-01-10&checkout_date=2020-01-20&hotel_ids=1,3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7171",
+									"path": [
+										"hotels",
+										"search-availabilities"
+									],
+									"query": [
+										{
+											"key": "checkin_date",
+											"value": "2020-01-10"
+										},
+										{
+											"key": "checkout_date",
+											"value": "2020-01-20"
+										},
+										{
+											"key": "hotel_ids",
+											"value": "1,3",
+											"description": "if more than 1 id, use comma(,) as separate\n"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "With Limit and Offset",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:7171/hotels/search-availabilities?checkin_date=2020-01-10&checkout_date=2020-01-20&limit=1&offset=0",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7171",
+									"path": [
+										"hotels",
+										"search-availabilities"
+									],
+									"query": [
+										{
+											"key": "checkin_date",
+											"value": "2020-01-10"
+										},
+										{
+											"key": "checkout_date",
+											"value": "2020-01-20"
+										},
+										{
+											"key": "limit",
+											"value": "1"
+										},
+										{
+											"key": "offset",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Error Sample",
+					"item": [
+						{
+							"name": "Checkin Date NULL",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:7171/hotels/search-availabilities?checkout_date=2020-01-11",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7171",
+									"path": [
+										"hotels",
+										"search-availabilities"
+									],
+									"query": [
+										{
+											"key": "checkout_date",
+											"value": "2020-01-11"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Checkout Date NULL",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:7171/hotels/search-availabilities?checkin_date=2020-01-11",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7171",
+									"path": [
+										"hotels",
+										"search-availabilities"
+									],
+									"query": [
+										{
+											"key": "checkin_date",
+											"value": "2020-01-11"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Checkin Greater than Checkout",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:7171/hotels/search-availabilities?checkin_date=2020-01-11&checkout_date=2020-01-10",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7171",
+									"path": [
+										"hotels",
+										"search-availabilities"
+									],
+									"query": [
+										{
+											"key": "checkin_date",
+											"value": "2020-01-11"
+										},
+										{
+											"key": "checkout_date",
+											"value": "2020-01-10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Wrong Format Checkin Date",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:7171/hotels/search-availabilities?checkin_date=xxxxx&checkout_date=2020-01-20",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7171",
+									"path": [
+										"hotels",
+										"search-availabilities"
+									],
+									"query": [
+										{
+											"key": "checkin_date",
+											"value": "xxxxx"
+										},
+										{
+											"key": "checkout_date",
+											"value": "2020-01-20"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Wrong Format Checkout Date",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:7171/hotels/search-availabilities?checkin_date=2020-01-11&checkout_date=xxxxx",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7171",
+									"path": [
+										"hotels",
+										"search-availabilities"
+									],
+									"query": [
+										{
+											"key": "checkin_date",
+											"value": "2020-01-11"
+										},
+										{
+											"key": "checkout_date",
+											"value": "xxxxx"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		}
+	]
+}
